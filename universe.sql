@@ -166,23 +166,23 @@ ALTER SEQUENCE public.planet_planet_id_seq OWNED BY public.planet.planet_id;
 
 
 --
--- Name: rockets; Type: TABLE; Schema: public; Owner: freecodecamp
+-- Name: rocket; Type: TABLE; Schema: public; Owner: freecodecamp
 --
 
-CREATE TABLE public.rockets (
+CREATE TABLE public.rocket (
     rocket_id integer NOT NULL,
-    planet_id integer NOT NULL,
-    name character varying(30) NOT NULL
+    name character varying(30) NOT NULL,
+    planet_id integer NOT NULL
 );
 
 
-ALTER TABLE public.rockets OWNER TO freecodecamp;
+ALTER TABLE public.rocket OWNER TO freecodecamp;
 
 --
--- Name: rockets_roket_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
+-- Name: rocket_rocket_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
 --
 
-CREATE SEQUENCE public.rockets_roket_id_seq
+CREATE SEQUENCE public.rocket_rocket_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -191,13 +191,13 @@ CREATE SEQUENCE public.rockets_roket_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.rockets_roket_id_seq OWNER TO freecodecamp;
+ALTER TABLE public.rocket_rocket_id_seq OWNER TO freecodecamp;
 
 --
--- Name: rockets_roket_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
+-- Name: rocket_rocket_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.rockets_roket_id_seq OWNED BY public.rockets.rocket_id;
+ALTER SEQUENCE public.rocket_rocket_id_seq OWNED BY public.rocket.rocket_id;
 
 
 --
@@ -263,10 +263,10 @@ ALTER TABLE ONLY public.planet ALTER COLUMN planet_id SET DEFAULT nextval('publi
 
 
 --
--- Name: rockets rocket_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+-- Name: rocket rocket_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.rockets ALTER COLUMN rocket_id SET DEFAULT nextval('public.rockets_roket_id_seq'::regclass);
+ALTER TABLE ONLY public.rocket ALTER COLUMN rocket_id SET DEFAULT nextval('public.rocket_rocket_id_seq'::regclass);
 
 
 --
@@ -333,13 +333,13 @@ INSERT INTO public.planet VALUES (12, 'Planet L', false, true, 'This is Planet L
 
 
 --
--- Data for Name: rockets; Type: TABLE DATA; Schema: public; Owner: freecodecamp
+-- Data for Name: rocket; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.rockets VALUES (2, 2, 'Rocket B');
-INSERT INTO public.rockets VALUES (3, 3, 'Rocket C');
-INSERT INTO public.rockets VALUES (4, 4, 'Rocket D');
-INSERT INTO public.rockets VALUES (1, 1, 'Rocket A');
+INSERT INTO public.rocket VALUES (1, 'Rocket A', 1);
+INSERT INTO public.rocket VALUES (2, 'Rocket B', 2);
+INSERT INTO public.rocket VALUES (3, 'Rocket C', 3);
+INSERT INTO public.rocket VALUES (4, 'Rocket D', 4);
 
 
 --
@@ -376,10 +376,10 @@ SELECT pg_catalog.setval('public.planet_planet_id_seq', 12, true);
 
 
 --
--- Name: rockets_roket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
+-- Name: rocket_rocket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.rockets_roket_id_seq', 4, true);
+SELECT pg_catalog.setval('public.rocket_rocket_id_seq', 4, true);
 
 
 --
@@ -398,11 +398,35 @@ ALTER TABLE ONLY public.galaxy
 
 
 --
+-- Name: galaxy galaxy_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.galaxy
+    ADD CONSTRAINT galaxy_pkey PRIMARY KEY (galaxy_id);
+
+
+--
 -- Name: moon moon_moon_id_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
 ALTER TABLE ONLY public.moon
     ADD CONSTRAINT moon_moon_id_key UNIQUE (moon_id);
+
+
+--
+-- Name: moon moon_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.moon
+    ADD CONSTRAINT moon_pkey PRIMARY KEY (moon_id);
+
+
+--
+-- Name: planet planet_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.planet
+    ADD CONSTRAINT planet_pkey PRIMARY KEY (planet_id);
 
 
 --
@@ -414,11 +438,27 @@ ALTER TABLE ONLY public.planet
 
 
 --
--- Name: rockets rockets_rocket_id_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+-- Name: rocket rocket_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.rockets
-    ADD CONSTRAINT rockets_rocket_id_key UNIQUE (rocket_id);
+ALTER TABLE ONLY public.rocket
+    ADD CONSTRAINT rocket_pkey PRIMARY KEY (rocket_id);
+
+
+--
+-- Name: rocket rocket_rocket_id_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.rocket
+    ADD CONSTRAINT rocket_rocket_id_key UNIQUE (rocket_id);
+
+
+--
+-- Name: star star_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.star
+    ADD CONSTRAINT star_pkey PRIMARY KEY (star_id);
 
 
 --
@@ -446,11 +486,11 @@ ALTER TABLE ONLY public.planet
 
 
 --
--- Name: rockets rockets_planet_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
+-- Name: rocket rocket_planet_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.rockets
-    ADD CONSTRAINT rockets_planet_id_fkey FOREIGN KEY (planet_id) REFERENCES public.planet(planet_id);
+ALTER TABLE ONLY public.rocket
+    ADD CONSTRAINT rocket_planet_id_fkey FOREIGN KEY (planet_id) REFERENCES public.planet(planet_id);
 
 
 --
